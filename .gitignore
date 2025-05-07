@@ -1,0 +1,39 @@
+# R-specific
+.Rhistory
+.RData
+.Rproj.user/
+*.Rproj
+.Ruserdata
+
+# R Markdown output
+*.utf8.md
+*.knit.md
+*.html
+*.pdf
+
+# Data files (optional - uncomment if you don’t want to commit raw data)
+# *.csv
+# *.xlsx
+# *.RData
+# *.rds
+
+# R packages cache
+.Rcache/
+
+# VS Code settings
+.vscode/
+
+# Python cache & extensions (common if working with .ipynb or R + Python)
+__pycache__/
+*.py[cod]
+*.pyo
+*.ipynb_checkpoints/
+*.egg-info/
+*.pyi
+
+# System files
+.DS_Store
+Thumbs.db
+
+# Git ignored backups
+*~
