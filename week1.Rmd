@@ -6,25 +6,25 @@ output: html_document
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(echo = FALSE)
 ```
 
-## R Markdown
+load("fatherSon.RData")
+View(fatherSon)
 
-This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+# View mtcars dataset only in RMD
+View(mtcars)
 
-When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+# Plot mpg versus hp
+plot(x = mtcars$hp, y = mtcars$mpg, ylab = "mpg", xlab = "hp", main = "Scatterplot of hp and mpg")
 
-```{r cars}
-summary(cars)
-```
+# Simple linear regression
+model1 <- lm(mpg ~ hp, data = mtcars)
+summary(model1)
 
-## Including Plots
+# Multiple linear regression
+model2 <- lm(mpg ~ disp + hp + wt, data=mtcars)
+summary(model2)
 
-You can also embed plots, for example:
-
-```{r pressure, echo=FALSE}
-plot(pressure)
-```
-
-Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+model3 <- lm(mpg ~ hp + wt, data=mtcars)
+summary(model3)
