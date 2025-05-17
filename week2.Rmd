@@ -1,30 +1,51 @@
 ---
-title: "week2"
+title: "week2, multiple regression"
 author: "Erin Xu"
 date: "2025-05-17"
 output: html_document
 ---
 
-```{r setup, include=FALSE}
+<!--```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
-```
+gas <- read.csv("GasVapor.csv")
+View(gas)
+movie <- read.csv("movies.csv")
+View(movie)
 
-## R Markdown
+x_tank_temp_vec <- gas$TankTemp #extract data from each col 
+x_gas_temp_vec <- gas$GasTemp
+x_tank_pres_vec <- gas$TankPres
+x_gas_pres_vec <- gas$GasPres
+y_vec <- gas$Y
+len <- length(gas$X) # create first col of design matrix with ones for beta hat 0
+col_1 <- rep(1, len)
+design_matrix <- matrix(c(col_1, x_tank_temp_vec, x_gas_temp_vec, x_tank_pres_vec, x_gas_pres_vec), ncol=5) # specify ncol
 
-This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+xtx <- t(design_matrix) %*% design_matrix 
+xty <- t(design_matrix) %*% y_vec
+xtx_inv <- solve(xtx)
+beta_hat <- xtx_inv %*% xty
+head(beta_hat)
+#these give the same results, the matrix of beta hats 
+summary(lm(Y ~ TankTemp + GasTemp + TankPres + GasPres, data=gas))
 
-When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+y_hat <- design_matrix %*% beta_hat # predicted t
+residuals <- y_vec - y_hat
+variance_hat <- sum(residuals^2)/(len -(5))
+print(variance_hat)
+#these give same variance estimation 
+summary(lm(Y ~ TankTemp + GasTemp + TankPres + GasPres, data=gas))$sigma^2
 
-```{r cars}
-summary(cars)
-```
+# mu_{y|x1, x2, x3} = box(hat) = beta0 + beta1*rate + beta2*user + beta3*meta
+summary(lm(Box ~ Rate + User + Meta, data = movie))
+b_hats <- coef(lm(Box ~ Rate + User + Meta, data = movie))
+intercept <- b_hats["(Intercept)"]
+rate_coef <- b_hats["Rate"]
+user_coef <- b_hats["User"]
+meta_coef <- b_hats["Meta"]
+cat("Box_hat =", intercept, "+", rate_coef, "* Rate_hat +", user_coef, "* User_hat +", meta_coef, "* Meta_hat")
+#the intecept -169.0862 is the estimated average of the Box office receipts (in millions of USD) when all the predictors are 0, however this makes no sense and is not a valid interpretation as you cannot have negative dollars
+# 35.4962 represents the estimated average chage of box office receipts in millions of usd for 1 unit increase in rate holding all other predictors constant. if you just wanted to find the estimated average box office receipt with just rate, then you would add the intercept of -169.0862 to the previous calculation. 
 
-## Including Plots
-
-You can also embed plots, for example:
-
-```{r pressure, echo=FALSE}
-plot(pressure)
-```
-
-Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+-->
+``` 
