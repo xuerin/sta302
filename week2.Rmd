@@ -7,7 +7,7 @@ output: html_document
 
 <!--```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
-gas <- read.csv("GasVapor.csv")
+<!-- gas <- read.csv("GasVapor.csv") -->
 View(gas)
 movie <- read.csv("movies.csv")
 View(movie)
